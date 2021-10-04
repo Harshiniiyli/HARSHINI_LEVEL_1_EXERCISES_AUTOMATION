@@ -39,19 +39,20 @@ public class AutomationDriver {
 
 	}
 
+	//This method will select each radio button and verify if it is selected//
 	public static void exerciseOne(WebDriver driver) {
-		// count variable gets number of all the radio buttons present in the web page
+		// count variable gets number of all the radio buttons present in the web page//
 		int count = driver.findElements(By.xpath("//*[@id='radio-btn-example']/fieldset/label/input")).size();
 
-		// loop to click each radioButton and check if it is selected or not
+		// loop to click each radioButton and check if it is selected or not//
 		for (int i = 0; i < count; i++) {
 			WebElement toCheck = driver.findElements(By.xpath("//*[@id='radio-btn-example']/fieldset/label/input")).get(i);
-			toCheck.click(); // click on radio button
+			toCheck.click();  //click on radio button//
 			
 			System.out.println(driver.findElements(By.xpath("//*[@id='radio-btn-example']/fieldset/label")).get(i).getText()
 							+ " is clicked");
 			
-			// condition to verify if the button is selected
+			// condition to verify if the button is selected//
 			if (toCheck.isSelected()) {
 				System.out.println(driver.findElements(By.xpath("//*[@id='radio-btn-example']/fieldset/label")).get(i).getText()
 								+ " is selected");
@@ -62,22 +63,22 @@ public class AutomationDriver {
 
 	}
 
+	//This method will type "United States" in input field and verify if required state is reflected in the field //
 	public static void exerciseTwo(WebDriver driver) {
 
-		// send text to auto search
+		// send text to auto search//
 		driver.findElement(By.id("autocomplete")).sendKeys("united states");
 
-		// list of all the available options
+		// list of all the available options//
 		List<WebElement> options = driver.findElements(By.xpath("//li[@class='ui-menu-item']/div"));
 
-		// Iterate through each option and click on the "United States Minor Outlying
-		// Islands" text
+		// Iterate through each option and click on the "United States Minor Outlying Islands" text//
 		for (WebElement option : options) {
 			if (option.getText().equalsIgnoreCase("United States Minor Outlying Islands")) {
 				option.click();
 				System.out.println(driver.findElement(By.id("autocomplete")).getText());
 
-				// verify if the text is selected
+				// verify if the text is selected//
 				System.out.println(driver.findElement(By.id("autocomplete")).isDisplayed());
 
 				break;
@@ -87,6 +88,7 @@ public class AutomationDriver {
 		}
 	}
 
+	
 	public static void exerciseThree(WebDriver driver) {
 
 		// Storing static dropDown menu in a variable
@@ -191,11 +193,11 @@ public class AutomationDriver {
 		// to get information about the windows opened in browser
 		Set<String> windows = driver.getWindowHandles();
 
-		Iterator<String> it = windows.iterator();
+		Iterator<String> iterateLoop = windows.iterator();
 
 		// Storing parent and child id
-		String parentId = it.next();
-		String childId = it.next();
+		String parentId = iterateLoop.next();
+		String childId = iterateLoop.next();
 
 		// switching to child window
 		driver.switchTo().window(childId);
@@ -220,13 +222,13 @@ public class AutomationDriver {
 				.build().perform();
 		Set<String> windows = driver.getWindowHandles();
 
-		Iterator<String> it = windows.iterator();
+		Iterator<String> iterateLoop = windows.iterator();
 
 		// parent id is stored
-		String parentId = it.next();
+		String parentId = iterateLoop.next();
 
 		// child id is stored
-		String childId = it.next();
+		String childId = iterateLoop.next();
 
 		// switch window to child window
 		driver.switchTo().window(childId);
@@ -237,10 +239,10 @@ public class AutomationDriver {
 		// close child tab
 		driver.close();
 
-		// Return to parent / original window
+		// Return to parent or original window
 		driver.switchTo().window(parentId);
 		String str2 = driver.getTitle();
-		System.out.println(driver.getTitle());
+		System.out.println(str2);
 		// verify if the tab opened is parent, by getting the title of page
 		System.out.println(str2.contains("Practice Page"));
 
