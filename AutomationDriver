@@ -283,9 +283,15 @@ public class AutomationDriver {
 		List<WebElement> options = driver.findElements(By.cssSelector("table[class='table-display'] tbody"));
 		// loop to check if all the rows are present in the table//
 		for (WebElement option : options) {
-			int i = 0;
-			System.out.println(option.findElements(By.xpath("//*[@id=\"product\"]/tbody")).get(i).getText());
-			i++;
+			if(option!=null){
+				int i = 0;
+				System.out.println(option.findElements(By.xpath("//*[@id=\"product\"]/tbody")).get(i).getText());
+				i++;
+			}
+			else{
+				System.out.println("No text present in the row");
+				System.out.println(option.findElements(By.xpath("//*[@id=\"product\"]/tbody")).get(i).getText());
+			}
 		}
 
 	}
