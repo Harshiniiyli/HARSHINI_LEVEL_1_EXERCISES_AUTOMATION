@@ -1,0 +1,299 @@
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+
+public class AutomationDriver {
+
+	public static void main(String[] args) throws InterruptedException {
+
+		System.setProperty("webdriver.chrome.driver",
+				"F:\\QUALITEST TRAINING COURSE 1\\selenium course\\chromedriver_win32\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+
+		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().window().maximize();
+		
+		//methods for each exercise 
+		exerciseOne(driver);
+		exerciseTwo(driver);
+		exerciseThree(driver);
+		exerciseFour(driver);
+		exerciseFourPointOne(driver);
+		exerciseFourPointTwo(driver);
+		exerciseFive(driver);
+		exerciseSix(driver);
+		exerciseSeven(driver);
+		exerciseEight(driver);
+		exerciseNine(driver);
+
+	}
+
+	public static void exerciseOne(WebDriver driver) {
+		// count variable gets number of all the radio buttons present in the web page
+		int count = driver.findElements(By.xpath("//*[@id='radio-btn-example']/fieldset/label/input")).size();
+
+		// loop to click each radioButton and check if it is selected or not
+		for (int i = 0; i < count; i++) {
+			WebElement toCheck = driver.findElements(By.xpath("//*[@id='radio-btn-example']/fieldset/label/input")).get(i);
+			toCheck.click(); // click on radio button
+			
+			System.out.println(driver.findElements(By.xpath("//*[@id='radio-btn-example']/fieldset/label")).get(i).getText()
+							+ " is clicked");
+			
+			// condition to verify if the button is selected
+			if (toCheck.isSelected()) {
+				System.out.println(driver.findElements(By.xpath("//*[@id='radio-btn-example']/fieldset/label")).get(i).getText()
+								+ " is selected");
+			} else {
+				System.out.println("Radio Button not selected ");
+			}
+		}
+
+	}
+
+	public static void exerciseTwo(WebDriver driver) {
+
+		// send text to auto search
+		driver.findElement(By.id("autocomplete")).sendKeys("united states");
+
+		// list of all the available options
+		List<WebElement> options = driver.findElements(By.xpath("//li[@class='ui-menu-item']/div"));
+
+		// Iterate through each option and click on the "United States Minor Outlying
+		// Islands" text
+		for (WebElement option : options) {
+			if (option.getText().equalsIgnoreCase("United States Minor Outlying Islands")) {
+				option.click();
+				System.out.println(driver.findElement(By.id("autocomplete")).getText());
+
+				// verify if the text is selected
+				System.out.println(driver.findElement(By.id("autocomplete")).isDisplayed());
+
+				break;
+			} else {
+				System.out.println("Text not found ");
+			}
+		}
+	}
+
+	public static void exerciseThree(WebDriver driver) {
+
+		// Storing static dropDown menu in a variable
+		WebElement dropdown = driver.findElement(By.xpath("//*[@id='dropdown-class-example']"));
+		Select staticDrop = new Select(dropdown);
+
+		// count variable gets total options in the dropDown menu
+		int count = driver.findElements(By.xpath("//*[@id='dropdown-class-example']/option")).size();
+		System.out.println(count);
+		int i = 1;
+
+		// Iterate through each option and verify if it is selected
+		while (i < count) {
+
+			staticDrop.selectByIndex(i);
+			System.out.println(staticDrop.getFirstSelectedOption().getText());
+			System.out.println(staticDrop.getFirstSelectedOption().isSelected());
+			i++;
+		}
+	}
+
+	public static void exerciseFour(WebDriver driver) throws InterruptedException {
+
+		// count variable to get total checkBoxes present in web page
+		int count = driver.findElements(By.xpath("//div[@id='checkbox-example']/fieldset/label")).size();
+		System.out.println(count);
+
+		// Iteration through each checkBox
+		for (int i = 0; i < count; i++) {
+			driver.findElements(By.xpath("//div[@id='checkbox-example']/fieldset/label/input")).get(i).click();
+			System.out.println("click " + i);
+			Thread.sleep(3000L);
+
+			// click on each checkBox and verify if it is selected then deSelect it
+			if ((driver.findElements(By.xpath("//div[@id='checkbox-example']/fieldset/label/input")).get(i)
+					.isSelected())) {
+				System.out.println("is selected " + i);
+				driver.findElements(By.xpath("//div[@id='checkbox-example']/fieldset/label/input")).get(i).click();
+				System.out.println("is deselected  " + i);
+			}
+
+		}
+	}
+
+	public static void exerciseFourPointOne(WebDriver driver) {
+
+		// count variable to get all the checkBoxes present in web page
+		int count = driver.findElements(By.xpath("//div[@id='checkbox-example']/fieldset/label")).size();
+		System.out.println(count);
+
+		// list of all the check boxes
+		List<WebElement> options = driver.findElements(By.xpath("//div[@id='checkbox-example']/fieldset/label/input"));
+		System.out.println(options);
+
+		// Iteration through each check box and click them
+		for (WebElement option : options) {
+			option.click();
+
+			// verification if the check box is selected
+			if (option.isSelected()) {
+				System.out.println("true " + option);
+			}
+		}
+	}
+
+	public static void exerciseFourPointTwo(WebDriver driver) throws InterruptedException {
+
+		// count variable to get all the checkBoxes present in web page
+		int count = driver.findElements(By.xpath("//div[@id='checkbox-example']/fieldset/label")).size();
+		System.out.println(count);
+
+		// List of all the check boxes
+		List<WebElement> options = driver.findElements(By.xpath("//div[@id='checkbox-example']/fieldset/label/input"));
+		System.out.println(options);
+
+		// loop to select all the checkBoxes
+		for (WebElement option : options) {
+			option.click();
+
+			// verify if the check box is selected
+			if (option.isSelected()) {
+				System.out.println("true " + option);
+			}
+		}
+		Thread.sleep(2000);
+
+		// loop to deSelect all the checkBoxes
+		for (WebElement option2 : options) {
+			option2.click();
+
+			// verify if the check box is deSelected
+			if (!option2.isSelected()) {
+				System.out.println("false " + option2);
+			}
+		}
+	}
+
+	public static void exerciseFive(WebDriver driver) {
+
+		driver.findElement(By.xpath("//button[@id='openwindow']")).click();
+
+		// to get information about the windows opened in browser
+		Set<String> windows = driver.getWindowHandles();
+
+		Iterator<String> it = windows.iterator();
+
+		// Storing parent and child id
+		String parentId = it.next();
+		String childId = it.next();
+
+		// switching to child window
+		driver.switchTo().window(childId);
+		String str = driver.getTitle();
+		System.out.println(str);
+		// verify if the opened window is child, by getting the page title
+		System.out.println(str.contains("QA Click Academy"));
+
+		// Switch to parent window
+		driver.switchTo().window(parentId);
+		System.out.println(driver.getTitle());
+		// verify if the opened window is parent, by getting the page title
+		System.out.println(str.contains("Practice Page"));
+	}
+
+	public static void exerciseSix(WebDriver driver) {
+		Actions keyPress = new Actions(driver);
+
+		keyPress.moveToElement(driver.findElement(By.xpath("//*[@id=\"openwindow\"]"))).keyDown(Keys.CONTROL).click()
+				.build().perform();
+		Set<String> windows = driver.getWindowHandles();
+
+		Iterator<String> it = windows.iterator();
+
+		// parent id is stored
+		String parentId = it.next();
+
+		// child id is stored
+		String childId = it.next();
+
+		// switch window to child window
+		driver.switchTo().window(childId);
+		String str = driver.getTitle();
+		System.out.println(str);
+		// verify if the tab opened is child, by getting the title of page
+		System.out.println(str.contains("QA Click Academy"));
+		// close child tab
+		driver.close();
+
+		// Return to parent / original window
+		driver.switchTo().window(parentId);
+		String str2 = driver.getTitle();
+		System.out.println(driver.getTitle());
+		// verify if the tab opened is parent, by getting the title of page
+		System.out.println(str2.contains("Practice Page"));
+
+	}
+
+	public static void exerciseSeven(WebDriver driver) throws InterruptedException {
+
+		Thread.sleep(3000);
+		//send name to "switch to alert window"
+		driver.findElement(By.id("name")).sendKeys("Harshini");
+		Thread.sleep(3000);
+		
+		//click on alert button
+		driver.findElement(By.cssSelector("[id='alertbtn']")).click();
+		Thread.sleep(3000);
+		
+		//verify if the alert text is displayed
+		System.out.println(driver.switchTo().alert().getText());
+
+		//accept the alert 
+		driver.switchTo().alert().accept();
+		Thread.sleep(3000);
+	}
+
+	public static void exerciseEight(WebDriver driver) {
+
+		// Scroll down the page until the “Web Table” example is completely visible.
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(0,600)");
+
+		List<WebElement> options = driver.findElements(By.cssSelector("table[class='table-display'] tbody"));
+		// loop to check if all the rows are present in the table
+		for (WebElement option : options) {
+			int i = 0;
+			System.out.println(option.findElements(By.xpath("//*[@id=\"product\"]/tbody")).get(i).getText());
+			i++;
+		}
+
+	}
+
+	public static void exerciseNine(WebDriver driver) throws InterruptedException {
+
+		Actions mouse = new Actions(driver);
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		// window scroll to mousehover button
+		js.executeScript("window.scrollBy(0,1000)");
+
+		Thread.sleep(3000);
+		mouse.moveToElement(driver.findElement(By.xpath("//button[@id='mousehover']"))).build().perform();
+
+		// click on top which will navigate to top of page
+		Thread.sleep(3000);
+		mouse.moveToElement(driver.findElement(By.cssSelector("a[href='#top']"))).click().build().perform();
+
+	}	
+	
+}
