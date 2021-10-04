@@ -203,12 +203,14 @@ public class AutomationDriver {
 		System.out.println(str);
 		// verify if the opened window is child, by getting the page title
 		System.out.println(str.contains("QA Click Academy"));
-
+		driver.close();
+		
 		// Switch to parent window
 		driver.switchTo().window(parentId);
-		System.out.println(driver.getTitle());
+		String str2= driver.getTitle();
+		System.out.println(str2);
 		// verify if the opened window is parent, by getting the page title
-		System.out.println(str.contains("Practice Page"));
+		System.out.println(str2.contains("Practice Page"));
 	}
 
 	public static void exerciseSix(WebDriver driver) {
